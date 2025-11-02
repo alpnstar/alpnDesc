@@ -40,7 +40,7 @@ export const RenameDropdown: FC<RenameDropdownProps> = ({ page, children }) => {
 
   return (
     <Dropdown trigger={children}>
-      <div onClick={(e) => e.stopPropagation()}>
+      <div onMouseDown={(e) => e.stopPropagation()}>
         <input
           value={title}
           onChange={(e) => setTitle(e.target.value)}
