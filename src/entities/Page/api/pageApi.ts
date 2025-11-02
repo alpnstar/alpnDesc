@@ -131,6 +131,21 @@ export const pageApi = createApi({
         { type: "Page", id },
         { type: "Page", id: "LIST" },
       ],
+      async onQueryStarted(id, { dispatch, queryFulfilled }) {
+        const patchResult = dispatch(
+          pageApi.util.updateQueryData("getPages", undefined, (draft) => {
+            const index = draft.findIndex((page) => page.id === id)
+            if (index !== -1) {
+              draft.splice(index, 1)
+            }
+          })
+        )
+        try {
+          await queryFulfilled
+        } catch {
+          patchResult.undo()
+        }
+      },
     }),
   }),
 })
