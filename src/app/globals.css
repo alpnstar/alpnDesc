@@ -1,9 +1,96 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
 :root {
 }
+@theme {
+  @keyframes slide-down-and-fade {
+    from {
+      opacity: 0;
+      transform: translateY(-2px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 
-@theme inline {
+  @keyframes slide-left-and-fade {
+    from {
+      opacity: 0;
+      transform: translateX(2px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes slide-up-and-fade {
+    from {
+      opacity: 0;
+      transform: translateY(2px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slide-right-and-fade {
+    from {
+      opacity: 0;
+      transform: translateX(-2px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  @keyframes fade-in-scale {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  @keyframes fade-out-scale {
+    from {
+      opacity: 1;
+      transform: scale(1);
+    }
+    to {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+  }
+}
+
+@utility animate-fade-in-scale {
+  animation: fade-in-scale 0.18s ease-out forwards;
+}
+
+@utility animate-fade-out-scale {
+  animation: fade-out-scale 0.15s ease-in forwards;
+}
+
+@utility animate-slide-down {
+  animation: slide-down-and-fade 0.2s ease-out forwards;
+}
+
+@utility animate-slide-up {
+  animation: slide-up-and-fade 0.2s ease-out forwards;
+}
+
+@utility animate-slide-left {
+  animation: slide-left-and-fade 0.2s ease-out forwards;
+}
+
+@utility animate-slide-right {
+  animation: slide-right-and-fade 0.2s ease-out forwards;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -14,4 +101,8 @@
 body {
   font-family: Arial, Helvetica, sans-serif;
   background-color: #191919;
+  color: #f0efed;
+}
+* {
+  outline: none;
 }

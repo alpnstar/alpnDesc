@@ -24,6 +24,7 @@ export default defineConfig([
       "webpack.config.js",
       "babel.config.js",
       "postcss.config.js",
+      "scripts/",
       "scripts/generate.ts",
     ],
   },
