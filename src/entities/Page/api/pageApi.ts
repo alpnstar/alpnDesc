@@ -110,15 +110,26 @@ export const pageApi = createApi({
         { type: "Page", id: "LIST" },
       ],
       async onQueryStarted({ id, ...patch }, { dispatch, queryFulfilled }) {
-        const patchResult = dispatch(
+        const pagePatchResult = dispatch(
           pageApi.util.updateQueryData("getPageById", id, (draft) => {
             Object.assign(draft, patch)
           })
         )
+
+        const listPatchResult = dispatch(
+          pageApi.util.updateQueryData("getPages", undefined, (draft) => {
+            const pageToUpdate = draft.find((page) => page.id === id)
+            if (pageToUpdate && patch.title) {
+              pageToUpdate.title = patch.title as string
+            }
+          })
+        )
+
         try {
           await queryFulfilled
         } catch {
-          patchResult.undo()
+          pagePatchResult.undo()
+          listPatchResult.undo()
         }
       },
     }),
