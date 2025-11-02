@@ -44,7 +44,7 @@ export const Header: FC<HeaderProps> = () => {
       <ToggleBtn />
       {page && (
         <div className="flex gap-3">
-          <Dropdown trigger={<span>{page.title}</span>}>
+          <Dropdown trigger={<span className="cursor-pointer">{page.title}</span>}>
             <input
               value={title}
               onChange={(e) => setTitle(e.target.value)}
