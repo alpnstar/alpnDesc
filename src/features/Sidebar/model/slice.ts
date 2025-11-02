@@ -5,7 +5,7 @@ export interface SidebarSchema {
 }
 
 const initialState: SidebarSchema = {
-  status: false,
+  status: true,
 }
 
 const SidebarSlice = createSlice({
