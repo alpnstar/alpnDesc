@@ -133,6 +133,7 @@ const PagesItem: FC<PagesItemProps> = ({ page }) => {
         <span>{page.title}</span>
       </Link>
       <div
+        className="flex items-center"
         onClick={(e) => {
           e.preventDefault()
           e.stopPropagation()
@@ -140,7 +141,7 @@ const PagesItem: FC<PagesItemProps> = ({ page }) => {
       >
         <Dropdown
           trigger={
-            <span className="hidden group-hover/li:inline-block">
+            <span className="cursor-pointer opacity-0 transition-opacity group-hover/li:opacity-100">
               <svg fill="#D3D3D3" viewBox="0 0 16 16" className="h-[16px] w-[16px]">
                 <path d="M3.2 6.725a1.275 1.275 0 1 0 0 2.55 1.275 1.275 0 0 0 0-2.55m4.8 0a1.275 1.275 0 1 0 0 2.55 1.275 1.275 0 0 0 0-2.55m4.8 0a1.275 1.275 0 1 0 0 2.55 1.275 1.275 0 0 0 0-2.55"></path>
               </svg>
