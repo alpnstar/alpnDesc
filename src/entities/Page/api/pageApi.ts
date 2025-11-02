@@ -93,7 +93,13 @@ export const pageApi = createApi({
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
         try {
           const { data: newPage } = await queryFulfilled
-          // Оптимистично обновляем кеш для getPageById
+          // Manually update the getPages list cache to avoid a refetch
+          dispatch(
+            pageApi.util.updateQueryData("getPages", undefined, (draft) => {
+              draft.push(newPage)
+            })
+          )
+          // Pre-populate the cache for the new page's view
           dispatch(pageApi.util.upsertQueryData("getPageById", newPage.id, newPage))
         } catch {
           // Можно обработать ошибку
