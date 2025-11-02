@@ -130,12 +130,17 @@ export const Dropdown: FC<DropdownProps> = ({ trigger, children }) => {
   )
 }
 
+import { cn } from "@/shared/lib/common"
+
+// ... (rest of the file is the same until DropdownItem)
+
 interface DropdownItemProps {
   children: ReactNode
   onClick?: () => void
+  className?: string
 }
 
-export const DropdownItem: FC<DropdownItemProps> = ({ children, onClick }) => {
+export const DropdownItem: FC<DropdownItemProps> = ({ children, onClick, className }) => {
   const context = useContext(DropdownContext)
 
   const handleClick = () => {
@@ -150,7 +155,10 @@ export const DropdownItem: FC<DropdownItemProps> = ({ children, onClick }) => {
   return (
     <div
       onClick={handleClick}
-      className="flex cursor-pointer items-center gap-2 rounded-md p-1.5 hover:bg-[#4d4b48] hover:text-white"
+      className={cn(
+        "flex cursor-pointer items-center gap-2 rounded-md p-1.5 hover:bg-[#4d4b48] hover:text-white",
+        className
+      )}
     >
       {children}
     </div>

@@ -88,9 +88,10 @@ const DeleteIcon = () => (
 
 interface PagesItemProps {
   page: Page
+  pages: Page[] // Pass the whole list for redirect logic
 }
 
-const PagesItem: FC<PagesItemProps> = ({ page }) => {
+const PagesItem: FC<PagesItemProps> = ({ page, pages }) => {
   const params = useParams()
   const router = useRouter()
   const activePageId = params.page
@@ -100,10 +101,22 @@ const PagesItem: FC<PagesItemProps> = ({ page }) => {
   const [triggerGetPage] = useLazyGetPageByIdQuery()
 
   const handleDelete = () => {
-    deletePage(page.id)
     if (activePageId === page.id) {
-      router.push("/")
+      const currentIndex = pages.findIndex((p) => p.id === page.id)
+      let redirectToId = null
+
+      if (pages.length > 1) {
+        const targetIndex = currentIndex === 0 ? 1 : currentIndex - 1
+        redirectToId = pages[targetIndex].id
+      }
+
+      if (redirectToId) {
+        router.push(`/page/${redirectToId}`)
+      } else {
+        router.push("/")
+      }
     }
+    deletePage(page.id)
   }
 
   const handleDuplicate = async () => {
@@ -114,7 +127,9 @@ const PagesItem: FC<PagesItemProps> = ({ page }) => {
         content: pageToDuplicate.content,
       }
       const res = await addPage(newPageData)
+      // @ts-expect-error - The `addPage` mutation returns a data shape that is not fully typed here.
       if (res.data?.id) {
+        // @ts-expect-error - The `addPage` mutation returns a data shape that is not fully typed here.
         router.push(`/page/${res.data.id}`)
       }
     }
@@ -158,7 +173,7 @@ const PagesItem: FC<PagesItemProps> = ({ page }) => {
               <span>Rename</span>
             </DropdownItem>
           </RenameDropdown>
-          <DropdownItem onClick={handleDelete}>
+          <DropdownItem onClick={handleDelete} className="text-red-500 hover:!text-red-400">
             <DeleteIcon />
             <span>Delete</span>
           </DropdownItem>
@@ -192,7 +207,7 @@ export const PagesList: FC<{ pages: Page[] }> = ({ pages }) => {
       </div>
       <ul>
         {pages.map((page) => (
-          <PagesItem key={page.id} page={page} />
+          <PagesItem key={page.id} page={page} pages={pages} />
         ))}
       </ul>
     </div>

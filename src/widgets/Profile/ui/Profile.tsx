@@ -13,9 +13,7 @@ export const Profile: FC = () => {
 
   const createPageHandler = async () => {
     const res = await addPage({ title: "New Page", content: "" })
-    // @ts-expect-error - The `addPage` mutation returns a data shape that is not fully typed here.
     if (res.data?.id) {
-      // @ts-expect-error - The `addPage` mutation returns a data shape that is not fully typed here.
       router.push(`/page/${res.data.id}`)
     }
   }
