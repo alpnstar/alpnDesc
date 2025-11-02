@@ -67,6 +67,14 @@
       transform: scale(0.9);
     }
   }
+  @keyframes shimmer {
+    from {
+      background-position: 200% 0;
+    }
+    to {
+      background-position: -200% 0;
+    }
+  }
 }
 
 @utility animate-fade-in-scale {
@@ -93,6 +101,12 @@
   animation: slide-right-and-fade 0.2s ease-out forwards;
 }
 
+@utility animate-shimmer {
+  background-image: linear-gradient(to right, #3a3a3a 0%, #4a4a4a 50%, #3a3a3a 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s linear infinite;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
   }
@@ -102,7 +116,4 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   background-color: #191919;
   color: #f0efed;
-}
-* {
-  outline: none;
 }

@@ -4,11 +4,18 @@ import { PartialBlock } from "@blocknote/core"
 import { useParams } from "next/navigation"
 import { useGetPageByIdQuery, useUpdatePageMutation } from "@/entities/Page/api/pageApi"
 import { Editor } from "@/shared/ui/Editor/Editor"
+import { Skeleton } from "@/shared/ui/Skeleton"
 import { Header } from "@/widgets/Header"
+
+const PageSkeleton = () => (
+  <div className="m-auto mt-[80px] w-[760px] px-13.5">
+    <Skeleton className="h-10 w-full rounded-md" />
+  </div>
+)
 
 const Page: FC = () => {
   const params = useParams()
-  const { data: page } = useGetPageByIdQuery(params.page as string)
+  const { data: page, isLoading } = useGetPageByIdQuery(params.page as string)
   const [updatePage] = useUpdatePageMutation()
 
   const [title, setTitle] = useState("")
@@ -39,10 +46,19 @@ const Page: FC = () => {
     updatePage({ id: page.id, title: newTitle })
   }, [page, title, updatePage])
 
+  if (isLoading) {
+    return (
+      <>
+        <Header />
+        <PageSkeleton />
+      </>
+    )
+  }
+
   return (
     <>
       <Header />
-      <div className="m-auto mt-[80px] h-[300px] w-[760px]">
+      <div className="m-auto mt-[80px] w-[760px]">
         {page ? (
           <>
             <input
